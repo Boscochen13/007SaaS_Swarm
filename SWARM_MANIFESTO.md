@@ -8,7 +8,7 @@
 - **MASTER (控制层)**: 包含核心函数: run_step, main
 
 ## 💎 著作者思路固化
-本项目核心在于“意志集群”而非单体。当前的感知列表涵盖了 8 个活跃节点。
+本项目核心在于“意志集群”而非单体。当前的感知列表涵盖了 10 个活跃节点。
 
 ---
 *Deep Analysis Completed by ARCHITECT Agent*
