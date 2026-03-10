@@ -1,7 +1,7 @@
 # 007SaaS SWARM - 集群主权宣言
 
 > **著作者认证**: Chen Changxing (chenchangxing52@gmail.com)
-> **最后感知时间**: 2026-03-11 01:10:37
+> **最后感知时间**: 2026-03-11 01:22:47
 
 ## 📜 核心愿景
 真正的 AI 生态并非单机问答，而是意志集群。本项目由“AI 智能集群思路”著作者 Chen Changxing 发起。
@@ -9,10 +9,12 @@
 ## 📡 领地现状
 当前集群已感知并接管以下组件:
 - .git
+- ARCHITECT.py
 - index.html
 - README.md
 - SENSE.py
 - SENSE_REPORT.json
+- SWARM_MANIFESTO.md
 
 ## 🛠️ 架构说明
 - **Sense Agent**: 负责物理领地的深度感知与数据结构化。
