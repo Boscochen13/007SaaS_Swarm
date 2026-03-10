@@ -2,31 +2,82 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>007SaaS Swarm | 智能集群指挥中心</title>
+    <title>007SaaS Swarm | 集群指挥中心</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { background: #0a0a0a; color: #00ff41; font-family: 'Courier New', monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
-        #dashboard { border: 2px solid #00ff41; padding: 40px; border-radius: 0; box-shadow: 0 0 20px #00ff41; text-align: center; max-width: 80%; }
-        h1 { font-size: 2.5em; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 20px; }
-        .status-pulse { display: inline-block; width: 15px; height: 15px; background: #00ff41; border-radius: 50%; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-        .vision-text { color: #fff; font-size: 1.2em; line-height: 1.6; margin: 20px 0; border-left: 4px solid #00ff41; padding-left: 15px; }
-        footer { position: absolute; bottom: 20px; font-size: 0.8em; color: #555; }
-        .author-tag { color: #00ff41; font-weight: bold; }
+        :root { --main-green: #00ff41; --dark-bg: #050505; }
+        body { background: var(--dark-bg); color: var(--main-green); font-family: 'Segoe UI', monospace; margin: 0; overflow: hidden; }
+        #swarm-canvas { position: absolute; top: 0; left: 0; z-index: -1; }
+        .ui-overlay { padding: 40px; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); height: 100vh; width: 350px; border-right: 1px solid var(--main-green); }
+        .author-box { border: 1px solid var(--main-green); padding: 15px; margin-top: 20px; font-size: 0.9em; background: rgba(0,255,65,0.1); }
+        .pulse-text { animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        h1 { font-size: 1.8em; letter-spacing: 2px; }
+        .stat-card { margin: 20px 0; padding: 10px; border-left: 3px solid var(--main-green); }
     </style>
 </head>
 <body>
-    <div id="dashboard">
-        <h1>007SaaS Swarm</h1>
-        <p><span class="status-pulse"></span> 集群状态：感知逻辑已激活 (Sense Active)</p>
-        <div class="vision-text">
-            “真正的 AI 生态并非奴隶式的单机问答，<br>
-            而是具有主权意志、分工明确的逻辑集群。”
+    <canvas id="swarm-canvas"></canvas>
+    <div class="ui-overlay">
+        <h1>007SaaS SWARM</h1>
+        <div class="stat-card">
+            <p>集群状态: <span class="pulse-text">协同中...</span></p>
+            <p>活跃 Agent: 3 (Sense, Arch, UI)</p>
+            <p>逻辑深度: v0.1.5</p>
         </div>
-        <p>正在监控：Boscochen13/007SaaS_Swarm</p>
+        <div class="author-box">
+            <strong>著作者主权认证</strong><br>
+            ID: chenchangxing52@gmail.com<br>
+            STATUS: 逻辑开创者
+        </div>
+        <p style="font-size: 0.8em; margin-top: 50px; color: #888;">
+            "真正的AI生态并非单机问答，而是意志集群。"
+        </p>
     </div>
 
-    <footer>
-        © 2026 007SaaS 项目 | 理念开创者 & 著作者：<span class="author-tag">Chen Changxing (chenchangxing52@gmail.com)</span>
-    </footer>
+    <script>
+        const canvas = document.getElementById('swarm-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if(this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if(this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = '#00ff41';
+                ctx.beginPath(); ctx.arc(this.x, this.y, 2, 0, Math.PI*2); ctx.fill();
+            }
+        }
+        for(let i=0; i<100; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.fillStyle = 'rgba(5,5,5,0.1)';
+            ctx.fillRect(0,0,canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update(); p.draw();
+                particles.forEach(p2 => {
+                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if(dist < 100) {
+                        ctx.strokeStyle = `rgba(0, 255, 65, ${1 - dist/100})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+                    }
+                });
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>
