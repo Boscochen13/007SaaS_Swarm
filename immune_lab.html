@@ -2,34 +2,44 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>007SaaS Swarm | Digital Life Immunological Lab</title>
+    <title>007SaaS Swarm | 数字生命免疫实验室</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { margin: 0; background: #000; overflow: hidden; font-family: 'Inter', -apple-system, sans-serif; color: #fff; cursor: crosshair; }
+        body { margin: 0; background: #000; overflow: hidden; font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; color: #fff; cursor: crosshair; }
         canvas { display: block; }
         
         /* 叙事灵魂 - 呼吸感文字 */
         #narrative {
             position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
-            color: rgba(0, 255, 255, 0.8); font-size: 15px; text-align: center;
+            color: rgba(0, 255, 255, 0.8); font-size: 16px; text-align: center;
             letter-spacing: 2px; text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
             animation: breathe 4s ease-in-out infinite; pointer-events: none; width: 90%;
             font-weight: 300;
         }
         @keyframes breathe { 0%, 100% { opacity: 0; transform: translateX(-50%) translateY(10px); } 50% { opacity: 1; transform: translateX(-50%) translateY(0); } }
 
-        /* UI 控制台 - 赛博实验室风格 */
+        /* 左侧：专业实时控制台 */
         .hud {
             position: absolute; top: 25px; left: 25px; color: #58a6ff;
             background: rgba(1, 4, 9, 0.85); padding: 24px; border: 1px solid rgba(88, 166, 255, 0.2);
-            border-radius: 16px; backdrop-filter: blur(15px); pointer-events: none; font-family: 'JetBrains Mono', monospace;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            border-radius: 16px; backdrop-filter: blur(15px); pointer-events: none;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8); width: 280px;
         }
-        .label { font-size: 10px; color: #8b949e; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 1px; }
-        .value { font-size: 16px; color: #f0f6fc; margin-bottom: 18px; font-weight: bold; }
+        .label { font-size: 11px; color: #8b949e; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 1px; }
+        .value { font-size: 16px; color: #f0f6fc; margin-bottom: 18px; font-weight: bold; font-family: monospace; }
         .status-secure { color: #3fb950; text-shadow: 0 0 10px rgba(63, 185, 80, 0.4); }
         .status-threat { color: #f85149; text-shadow: 0 0 10px rgba(248, 81, 73, 0.4); }
         
+        /* 右侧：底层逻辑说明面板 */
+        .logic-panel {
+            position: absolute; top: 25px; right: 25px; width: 320px;
+            background: rgba(1, 4, 9, 0.7); padding: 20px; border-left: 3px solid #00ffff;
+            backdrop-filter: blur(10px); font-size: 13px; line-height: 1.6; color: #c9d1d9;
+        }
+        .logic-title { color: #00ffff; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid rgba(0,255,255,0.2); padding-bottom: 5px; }
+        .logic-item { margin-bottom: 12px; }
+        .logic-item b { color: #fff; }
+
         /* 涌现模式全屏警告 */
         #emergence-overlay {
             position: absolute; inset: 0; display: none; flex-direction: column;
@@ -37,39 +47,52 @@
             z-index: 100; pointer-events: none; border: 4px solid rgba(255, 215, 0, 0.2);
         }
         .emergence-text {
-            color: #ffd700; font-size: 4.5rem; font-weight: 900; 
+            color: #ffd700; font-size: 4rem; font-weight: 900; 
             text-shadow: 0 0 40px #ffd700; animation: shake 0.2s infinite;
         }
-        @keyframes shake { 0% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } 100% { transform: translate(2px, -2px); } }
     </style>
 </head>
 <body>
 
     <canvas id="immuneCanvas"></canvas>
     
-    <div id="narrative">
-        <span id="narrative-content"></span>
-    </div>
+    <div id="narrative"><span id="narrative-content"></span></div>
 
     <div class="hud">
-        <div style="font-size: 1.1rem; margin-bottom: 20px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">007Swarm IMMUNE LAB</div>
-        <p class="label">Immune System Origin</p>
-        <p class="value status-secure" id="origin-status">[ STANDBY & SENSING ]</p>
-        <p class="label">Pathogen Detected (AI Mutation)</p>
-        <p class="value status-threat" id="threat-count">0 UNITS</p>
-        <p class="label">Evolutionary Logic Gain</p>
+        <div style="font-size: 1.1rem; margin-bottom: 20px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">007Swarm 免疫监控</div>
+        <p class="label">系统核心节点状态</p>
+        <p class="value status-secure" id="origin-status">正在监测健康特征...</p>
+        <p class="label">检测到抗原 (AI 变异株)</p>
+        <p class="value status-threat" id="threat-count">0 单位</p>
+        <p class="label">进化演化增益 (算力回收)</p>
         <p class="value" id="evo-rate">0.00%</p>
-        <p class="label">Real-time Telemetry</p>
-        <p class="value" id="log" style="font-size: 12px; color: #8b949e;">Waiting for interaction...</p>
+        <p class="label">实时遥测日志</p>
+        <p class="value" id="log" style="font-size: 12px; color: #8b949e;">等待交互输入...</p>
         <div style="margin-top:20px; font-size: 10px; color: #444; border-top: 1px solid rgba(255,255,255,0.05); pt-4">
-            AUTHORED BY CHEN CHANGXING<br>
-            // FLOW_MESH PROTOCOL V2.1
+            著作者：陈长兴 (CHEN CHANGXING)<br>
+            // 数字化免疫协议 V1.2
+        </div>
+    </div>
+
+    <div class="logic-panel">
+        <div class="logic-title">🛡️ 防御哲学：数字抗体逻辑</div>
+        <div class="logic-item">
+            <b>1. 异己感知：</b>系统不查杀已知病毒，而是实时监测“健康网格”的扭曲。任何非正常流量都会触发<b>“免疫原性”</b>报警。
+        </div>
+        <div class="logic-item">
+            <b>2. 结构锁定：</b>防御 Agent (抗体) 会根据黑客 AI 的突变形状进行<b>毫秒级匹配</b>，通过吸附与包裹，彻底锁死其破坏力。
+        </div>
+        <div class="logic-item">
+            <b>3. 反向吞噬：</b>中和后的攻击载荷将被熔炼为纯净算力，<b>反哺回核心节点</b>。攻击者越疯狂，系统的进化速度越快。
+        </div>
+        <div style="font-size: 11px; color: #58a6ff; font-style: italic;">
+            * 尝试在屏幕上连续点击：模拟大规模入侵，见证最高阶“涌现模式”。
         </div>
     </div>
 
     <div id="emergence-overlay">
-        <div class="emergence-text">EMERGENCE ACTIVE</div>
-        <div style="color: #ffd700; font-family: monospace; font-size: 1.2rem; mt-4">EVOLUTION ACCELERATED</div>
+        <div class="emergence-text">最高阶涌现：激活</div>
+        <div style="color: #ffd700; font-family: monospace; font-size: 1.2rem; mt-4">进化速度已突破极限</div>
     </div>
 
     <script>
@@ -84,11 +107,11 @@
         let clickCount = 0;
         let clickTimer;
 
-        // 叙事灵魂文案
+        // 汉化的叙事灵魂
         const narrativeLines = [
-            {zh: "在这里，每一个字节的防御，都是实时演化出的抗体。", en: "Every byte of defense is an antibody evolved in real-time.", jp: "すべての防御バイトはリアルタイムで進化した抗体です。"},
-            {zh: "我们不堆砌防火墙，我们构建“免疫系统”。", en: "We don't build firewalls; we build 'immune systems'.", jp: "ファイアウォールを作るのではなく、「免疫システム」を作ります。"},
-            {zh: "攻击 007SaaS 只能让我们变得更强。", en: "Attacking 007SaaS only makes us stronger.", jp: "007SaaSへの攻撃は、私たちをより強くするだけです。"}
+            {zh: "每一个字节的防御，都是实时演化出的抗体。", en: "Every byte of defense is an antibody evolved in real-time.", jp: "すべての防御バイトはリアルタイムで進化した抗体です。"},
+            {zh: "攻击 007SaaS 只能让我们变得更强。", en: "Attacking 007SaaS only makes us stronger.", jp: "007SaaSへの攻撃は、私たちをより強くするだけです。"},
+            {zh: "让你的数字资产拥有进化的灵魂。", en: "Give your digital assets an evolving soul.", jp: "あなたのデジタル資産に進歩する魂を与えます。"}
         ];
         let narrativeIndex = 0;
         const savedLang = localStorage.getItem('pref-lang') || 'zh';
@@ -170,10 +193,9 @@
                 if (dist < 12) {
                     this.locked = true;
                     this.target.trappedBy = this;
-                    this.size -= 0.2; // 吞噬进度
+                    this.size -= 0.25; 
                     if(this.size <= 0) {
                         this.target.dead = true;
-                        // 释放反哺能量粒子
                         for(let i=0; i<6; i++) particles.push(new EnergyParticle(this.x, this.y, true));
                     }
                 } else {
@@ -198,13 +220,13 @@
             constructor(x, y, isRecycled = false) {
                 this.x = x; this.y = y;
                 this.isRecycled = isRecycled;
-                this.speed = Math.random() * 4 + 4;
+                this.speed = Math.random() * 5 + 5;
             }
             update() {
                 const dx = width/2 - this.x;
                 const dy = height/2 - this.y;
                 const dist = Math.sqrt(dx*dx + dy*dy);
-                if(dist < 10) {
+                if(dist < 15) {
                     this.dead = true;
                     triggerPulse();
                 } else {
@@ -223,24 +245,25 @@
 
         let originPulse = 0;
         function triggerPulse() {
-            originPulse = 40;
+            originPulse = 45;
             let rate = parseFloat(document.getElementById('evo-rate').innerText);
-            document.getElementById('evo-rate').innerText = (rate + 0.05).toFixed(2) + "%";
+            document.getElementById('evo-rate').innerText = (rate + 0.08).toFixed(2) + "%";
         }
 
         function triggerEmergence() {
             if(isEmergenceMode) return;
             isEmergenceMode = true;
             document.getElementById('emergence-overlay').style.display = 'flex';
-            document.getElementById('log').innerText = "[STATUS] Evolution Accelerated. System Overload? No.";
+            document.getElementById('log').innerText = "[警告] 系统过载！启动最高阶进化逻辑...";
             
             setTimeout(() => {
                 pathogens = [];
-                originPulse = 1500; // 金色冲击波
+                originPulse = 1800; 
                 document.getElementById('emergence-overlay').style.display = 'none';
                 setTimeout(() => {
                     isEmergenceMode = false;
-                    document.getElementById('evo-rate').innerText = (parseFloat(document.getElementById('evo-rate').innerText) + 15).toFixed(2) + "% [EMERGENT]";
+                    document.getElementById('log').innerText = "[状态] 进化完成。算力基线已提升。";
+                    document.getElementById('evo-rate').innerText = (parseFloat(document.getElementById('evo-rate').innerText) + 20).toFixed(2) + "% [GIGA]";
                 }, 1000);
             }, 2500);
         }
@@ -248,7 +271,7 @@
         window.addEventListener('mousedown', (e) => {
             clickCount++;
             pathogens.push(new Pathogen(e.clientX, e.clientY));
-            document.getElementById('log').innerText = "[WARN] Foreign Antigen Detected at Cursor.";
+            document.getElementById('log').innerText = "[检测] 外部入侵抗原。正在合成匹配代码...";
             
             setTimeout(() => {
                 pathogens.forEach(p => { if(!p.trappedBy) antibodies.push(new Antibody(p)); });
@@ -262,26 +285,24 @@
         });
 
         function animate() {
-            ctx.fillStyle = 'rgba(0, 3, 8, 0.25)';
+            ctx.fillStyle = 'rgba(0, 3, 8, 0.3)';
             ctx.fillRect(0, 0, width, height);
 
-            // 绘制核心
             ctx.beginPath();
-            ctx.arc(width/2, height/2, 20 + originPulse, 0, Math.PI * 2);
+            ctx.arc(width/2, height/2, 25 + originPulse, 0, Math.PI * 2);
             ctx.fillStyle = isEmergenceMode ? '#ffd700' : '#00ffff';
             ctx.fill();
             if(originPulse > 0) originPulse *= 0.85;
 
-            // 网格炎症
             ctx.beginPath();
-            ctx.strokeStyle = isEmergenceMode ? 'rgba(255, 215, 0, 0.1)' : 'rgba(88, 166, 255, 0.06)';
+            ctx.strokeStyle = isEmergenceMode ? 'rgba(255, 215, 0, 0.15)' : 'rgba(88, 166, 255, 0.08)';
             organicMesh.forEach(node => {
                 pathogens.forEach(p => {
                     const dx = p.x - node.x; const dy = p.y - node.y;
                     const d = Math.sqrt(dx*dx + dy*dy);
-                    if(d < 100) {
-                        node.x += (node.x - p.x) * 0.03;
-                        node.y += (node.y - p.y) * 0.03;
+                    if(d < 110) {
+                        node.x += (node.x - p.x) * 0.04;
+                        node.y += (node.y - p.y) * 0.04;
                     }
                 });
                 node.x += (node.ox - node.x) * 0.1;
@@ -297,12 +318,12 @@
             particles = particles.filter(p => !p.dead);
             particles.forEach(p => { p.update(); p.draw(); });
 
-            document.getElementById('threat-count').innerText = pathogens.length + " UNITS";
+            document.getElementById('threat-count').innerText = pathogens.length + " 单位";
             if(pathogens.length > 0) {
-                document.getElementById('origin-status').innerText = "[ IMMUNE RESPONSE ACTIVE ]";
+                document.getElementById('origin-status').innerText = "检测到免疫反应...";
                 document.getElementById('origin-status').className = "value status-threat";
-            } else {
-                document.getElementById('origin-status').innerText = "[ STANDBY & SENSING ]";
+            } else if (!isEmergenceMode) {
+                document.getElementById('origin-status').innerText = "系统运行稳健";
                 document.getElementById('origin-status').className = "value status-secure";
             }
 
