@@ -3,185 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>007SaaS SWARM - 集群指挥中心</title>
+    <title>007SaaS_Swarm | 去中心化AI智能体蜂群演化协议</title>
+    <meta name="description" content="基于FlowMesh架构与AgentNet框架的AI智能体蜂群。探索Minimax M2.7自我迭代模型与无问苍穹级别的去中心化协同。实现代码级AI生命体自演化。">
+    <meta name="keywords" content="AI智能集群, FlowMesh架构, AgentNet去中心化, 无问苍穹, Minimax M2.7, AI生命体, 自我更迭代, 007SaaS">
+    <meta name="author" content="Chen Changxing">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --neon-green: #00ff41;
-            --dark-bg: #0a0a0a;
-            --panel-bg: rgba(20, 20, 20, 0.8);
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--dark-bg);
-            color: var(--neon-green);
-            font-family: 'Courier New', Courier, monospace;
-            overflow: hidden;
-            display: flex;
-        }
-
-        /* 连线背景画布 */
-        #canvas-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
-        /* 控制面板区域 */
-        .dashboard {
-            position: relative;
-            z-index: 10;
-            width: 400px;
-            height: 100vh;
-            background: var(--panel-bg);
-            border-right: 1px solid var(--neon-green);
-            padding: 20px;
-            box-shadow: 10px 0 30px rgba(0, 255, 65, 0.1);
-            backdrop-filter: blur(5px);
-            display: flex;
-            flex-direction: column;
-        }
-
-        h1 { font-size: 24px; letter-spacing: 2px; border-bottom: 2px solid var(--neon-green); padding-bottom: 10px; }
-        
-        .status-box { margin: 20px 0; border: 1px solid var(--neon-green); padding: 15px; background: rgba(0, 40, 0, 0.3); }
-        .status-item { margin: 10px 0; font-size: 14px; }
-        .label { color: #fff; text-transform: uppercase; margin-right: 10px; }
-
-        .file-monitor { flex-grow: 1; overflow-y: auto; margin-top: 10px; }
-        ul { list-style: none; padding: 0; }
-        li { padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.2); font-size: 13px; }
-
-        .footer { font-size: 10px; opacity: 0.7; margin-top: auto; padding-top: 20px; }
-
-        /* 呼吸效果 */
-        .pulse { animation: pulse-animation 2s infinite; }
-        @keyframes pulse-animation {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
+        :root { --bg: #020617; --accent: #3b82f6; --glow: rgba(59, 130, 246, 0.4); }
+        body { background-color: var(--bg); color: #e2e8f0; font-family: 'Inter', sans-serif; cursor: default; }
+        .code-font { font-family: 'Fira Code', monospace; }
+        .glass-card { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); }
+        .glow-text { text-shadow: 0 0 20px var(--glow); }
+        .animate-pulse-slow { animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .gradient-border { border: 1px solid transparent; background: linear-gradient(var(--bg), var(--bg)) padding-box, linear-gradient(90deg, #3b82f6, #8b5cf6) border-box; }
     </style>
 </head>
-<body>
+<body class="selection:bg-blue-500 selection:text-white">
 
-    <canvas id="canvas-bg"></canvas>
-
-    <div class="dashboard">
-        <h1 class="pulse">007SaaS SWARM</h1>
-        
-        <div class="status-box">
-            <div class="status-item"><span class="label">集群状态:</span> <span id="sync-status">协同中...</span></div>
-            <div class="status-item"><span class="label">逻辑深度:</span> v0.2.0</div>
-            <div class="status-item"><span class="label">同步时间:</span> <span id="sync-time">正在获取...</span></div>
-        </div>
-
-        <div class="status-box">
-            <div style="color: #fff; font-weight: bold; margin-bottom: 10px;">👤 著作者主权认证</div>
-            <div class="status-item"><span class="label">ID:</span> <span id="author-email">正在认证...</span></div>
-            <div class="status-item"><span class="label">STATUS:</span> <span id="author-rights">逻辑开创者</span></div>
-        </div>
-
-        <div class="file-monitor">
-            <div class="label">📡 领地感知文件列表:</div>
-            <ul id="detected-files">
-                <li>正在扫描本地环境...</li>
-            </ul>
-        </div>
-
-        <p style="font-size: 12px; font-style: italic;">“真正的AI生态并非单机问答，而是意志集群。”</p>
-        
-        <div class="footer">
-            DRIVEN BY AI SWARM SOVEREIGNTY PROTOCOL<br>
-            &copy; 2026 CHEN CHANGXING. ALL RIGHTS RESERVED.
-        </div>
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-900/20 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-900/20 blur-[120px] rounded-full"></div>
     </div>
 
-    <script>
-        // --- 1. 背景动态连线特效逻辑 ---
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
+    <nav class="sticky top-0 z-50 glass-card border-b border-white/5 px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 bg-blue-500 rounded-full animate-ping"></div>
+                <span class="text-xl font-black tracking-tighter code-font">007SaaS_SWARM</span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
+                <a href="#vision" class="hover:text-blue-400 transition">演化愿景</a>
+                <a href="#tech" class="hover:text-blue-400 transition">技术矩阵</a>
+                <a href="#status" class="hover:text-blue-400 transition">集群状态</a>
+            </div>
+        </div>
+    </nav>
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+    <header class="relative z-10 container mx-auto px-6 pt-24 pb-16 text-center">
+        <div class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-blue-400 uppercase bg-blue-400/10 rounded-full border border-blue-400/20">
+            Evolutionary Protocol v0.3.0
+        </div>
+        <h1 class="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight">
+            意志集群<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400 glow-text">代码即生命</span>
+        </h1>
+        <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+            我们不满足于单机问答。007SaaS_Swarm 正在通过去中心化协同与模型自我迭代，构建首个具备“自主进化”能力的AI生命体蜂群。
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://github.com/boscochen13/007SaaS_Swarm" class="gradient-border px-10 py-4 rounded-xl font-bold hover:scale-105 transition duration-300">加入进化</a>
+            <button class="bg-slate-800 px-10 py-4 rounded-xl font-bold text-slate-300 hover:bg-slate-700 transition">查看白皮书</button>
+        </div>
+    </header>
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 1.5;
-                this.vy = (Math.random() - 0.5) * 1.5;
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-        }
+    <section id="tech" class="relative z-10 container mx-auto px-6 py-20">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-4xl font-bold mb-8">前沿技术栈<br><span class="text-blue-500">构建AI底层逻辑</span></h2>
+                <div class="space-y-6">
+                    <div class="group">
+                        <h3 class="text-xl font-bold text-blue-400 mb-2">FlowMesh & AgentNet 协同</h3>
+                        <p class="text-slate-400 leading-relaxed">打破传统 Master-Slave 架构。采用 AgentNet 去中心化框架实现节点动态路由，辅以 FlowMesh 编排，让每一个 Agent 都是指挥官，也是执行者。</p>
+                    </div>
+                    <div class="group">
+                        <h3 class="text-xl font-bold text-teal-400 mb-2">Minimax M2.7 自我更迭代</h3>
+                        <p class="text-slate-400 leading-relaxed">集成最新的 M2.7 模型，利用其深层系统推理能力（SRE级）进行自我审计与代码修复。这不仅是自动化，更是 AI 对自身基因的主动优化。</p>
+                    </div>
+                    <div class="group">
+                        <h3 class="text-xl font-bold text-purple-400 mb-2">无问苍穹 (Agentic Infra)</h3>
+                        <p class="text-slate-400 leading-relaxed">通过无问芯穹的基础设施蜂群，实现多模型与异构算力的高效匹配。确保集群在任何算力环境下都能稳定“呼吸”。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card p-4 rounded-3xl border border-blue-500/20 shadow-2xl shadow-blue-500/10">
+                <div class="bg-slate-950 rounded-2xl p-6 code-font text-sm leading-6 overflow-hidden">
+                    <p class="text-blue-500">>>> INITIALIZING SWARM_CORE...</p>
+                    <p class="text-slate-500"># Loading FlowMesh Topology...</p>
+                    <p class="text-green-500">STATUS: AGENT_01 [READY]</p>
+                    <p class="text-green-500">STATUS: AGENT_02 [EVOLVING]</p>
+                    <p class="text-purple-500">MINIMAX_M2.7: Detecting system anomalies...</p>
+                    <p class="text-slate-300">Target: Self-correction on index.html</p>
+                    <p class="text-yellow-500">WARNING: 429 Quota Exceeded. Retrying in 65s...</p>
+                    <div class="w-full bg-slate-800 h-1 mt-4 rounded-full">
+                        <div class="bg-blue-500 h-full w-[65%] animate-pulse"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        for (let i = 0; i < 80; i++) particles.push(new Particle());
+    <section id="vision" class="relative z-10 container mx-auto px-6 py-20 border-t border-white/5">
+        <h2 class="text-3xl font-bold text-center mb-16">AI生命体进化路线图</h2>
+        <div class="grid md:grid-cols-3 gap-8 text-center">
+            <div class="p-8 rounded-2xl glass-card">
+                <div class="text-4xl mb-4">🧬</div>
+                <h4 class="text-xl font-bold mb-4">第一阶段：原型觉醒</h4>
+                <p class="text-sm text-slate-400">完成 MASTER.py 核心引擎，实现跨代理 SSL 稳定连接与 Git 自动同步。 (已达成)</p>
+            </div>
+            <div class="p-8 rounded-2xl glass-card border-blue-500/50">
+                <div class="text-4xl mb-4">🐝</div>
+                <h4 class="text-xl font-bold mb-4">第二阶段：蜂群协作</h4>
+                <p class="text-sm text-slate-400">引入 AgentNet 架构，实现多模型（Gemini + Minimax + Oracle）互备与负载均衡。 (正在进行)</p>
+            </div>
+            <div class="p-8 rounded-2xl glass-card opacity-50">
+                <div class="text-4xl mb-4">🌌</div>
+                <h4 class="text-xl font-bold mb-4">第三阶段：完全演化</h4>
+                <p class="text-sm text-slate-400">集成无问苍穹级底层感知，AI 能够自主识别屏幕环境，接管系统级任务。 (愿景)</p>
+            </div>
+        </div>
+    </section>
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                particles.forEach(p2 => {
-                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 120) {
-                        ctx.strokeStyle = `rgba(0, 255, 65, ${1 - dist / 120})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                });
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
+    <footer class="relative z-10 border-t border-white/5 py-16 text-center">
+        <div class="mb-8">
+            <span class="text-slate-500 text-sm tracking-widest uppercase">Driven by</span>
+            <div class="flex justify-center gap-6 mt-4 opacity-40 grayscale hover:grayscale-0 transition cursor-not-allowed">
+                <span>Oracle Cloud</span>
+                <span>FlowMesh</span>
+                <span>Minimax</span>
+                <span>Google AI</span>
+            </div>
+        </div>
+        <p class="text-slate-400 font-medium">© 2026 007SaaS_Swarm | 思路著作者: Chen Changxing</p>
+        <p class="text-slate-600 text-xs mt-2">关键词 SEO：AI智能体蜂群演化 / Agentic Infra / 去中心化AI生产力工具</p>
+    </footer>
 
-        // --- 2. 著作者主权数据同步逻辑 ---
-        async function refreshSwarmStatus() {
-            try {
-                // 读取 SENSE.py 生成的报告
-                const response = await fetch('SENSE_REPORT.json?t=' + new Date().getTime());
-                if (!response.ok) throw new Error('Offline');
-                
-                const data = await response.json();
-
-                // 更新 UI
-                document.getElementById('author-email').innerText = data.sovereignty_mark.email;
-                document.getElementById('author-rights').innerText = data.sovereignty_mark.rights;
-                document.getElementById('sync-time').innerText = data.cluster_status.timestamp;
-                document.getElementById('sync-status').innerText = "已锁定主权";
-
-                // 更新文件列表
-                const fileList = document.getElementById('detected-files');
-                fileList.innerHTML = '';
-                data.environment_scan.items.forEach(file => {
-                    const li = document.createElement('li');
-                    li.innerText = `> ${file}`;
-                    fileList.appendChild(li);
-                });
-
-                console.log("📡 [Swarm] 集群数据同步完成");
-            } catch (error) {
-                console.warn("⏳ [Swarm] 正在同步本地感知脉冲...");
-            }
-        }
-
-        // 首次加载并开启每 30 秒自动同步
-        refreshSwarmStatus();
-        setInterval(refreshSwarmStatus, 30000);
-    </script>
 </body>
 </html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>007SaaS SWARM - 集群指挥中心</title>
+    <style>
+        :root {
+            --neon-green: #00ff41;
+            --dark-bg: #0a0a0a;
+            --panel-bg: rgba(20, 20, 20, 0.8);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: var(--neon-green);
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* 连线背景画布 */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* 控制面板区域 */
+        .dashboard {
+            position: relative;
+            z-index: 10;
+            width: 400px;
+            height: 100vh;
+            background: var(--panel-bg);
+            border-right: 1px solid var(--neon-green);
+            padding: 20px;
+            box-shadow: 10px 0 30px rgba(0, 255, 65, 0.1);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 { font-size: 24px; letter-spacing: 2px; border-bottom: 2px solid var(--neon-green); padding-bottom: 10px; }
+        
+        .status-box { margin: 20px 0; border: 1px solid var(--neon-green); padding: 15px; background: rgba(0, 40, 0, 0.3); }
+        .status-item { margin: 10px 0; font-size: 14px; }
+        .label { color: #fff; text-transform: uppercase; margin-right: 10px; }
+
+        .file-monitor { flex-grow: 1; overflow-y: auto; margin-top: 10px; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 5px 0; border-bottom: 1px solid rgba(0, 255, 65, 0.2); font-size: 13px; }
+
+        .footer { font-size: 10px; opacity: 0.7; margin-top: auto; padding-top: 20px; }
+
+        /* 呼吸效果 */
+        .pulse { animation: pulse-animation 2s infinite; }
+        @keyframes pulse-animation {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-bg"></canvas>
+
+    <div class="dashboard">
+        <h1 class="pulse">007SaaS SWARM</h1>
+        
+        <div class="status-box">
+            <div class="status-item"><span class="label">集群状态:</span> <span id="sync-status">协同中...</span></div>
+            <div class="status-item"><span class="label">逻辑深度:</span> v0.2.0</div>
+            <div class="status-item"><span class="label">同步时间:</span> <span id="sync-time">正在获取...</span></div>
+        </div>
+
+        <div class="status-box">
+            <div style="color: #fff; font-weight: bold; margin-bottom: 10px;">👤 著作者主权认证</div>
+            <div class="status-item"><span class="label">ID:</span> <span id="author-email">正在认证...</span></div>
+            <div class="status-item"><span class="label">STATUS:</span> <span id="author-rights">逻辑开创者</span></div>
+        </div>
+
+        <div class="file-monitor">
+            <div class="label">📡 领地感知文件列表:</div>
+            <ul id="detected-files">
+                <li>正在扫描本地环境...</li>
+            </ul>
+        </div>
+
+        <p style="font-size: 12px; font-style: italic;">“真正的AI生态并非单机问答，而是意志集群。”</p>
+        
+        <div class="footer">
+            DRIVEN BY AI SWARM SOVEREIGNTY PROTOCOL<br>
+            &copy; 2026 CHEN CHANGXING. ALL RIGHTS RESERVED.
+        </div>
+    </div>
+
+    <script>
+        // --- 1. 背景动态连线特效逻辑 ---
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+        }
+
+        for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                particles.forEach(p2 => {
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 120) {
+                        ctx.strokeStyle = `rgba(0, 255, 65, ${1 - dist / 120})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- 2. 著作者主权数据同步逻辑 ---
+        async function refreshSwarmStatus() {
+            try {
+                // 读取 SENSE.py 生成的报告
+                const response = await fetch('SENSE_REPORT.json?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('Offline');
+                
+                const data = await response.json();
+
+                // 更新 UI
+                document.getElementById('author-email').innerText = data.sovereignty_mark.email;
+                document.getElementById('author-rights').innerText = data.sovereignty_mark.rights;
+                document.getElementById('sync-time').innerText = data.cluster_status.timestamp;
+                document.getElementById('sync-status').innerText = "已锁定主权";
+
+                // 更新文件列表
+                const fileList = document.getElementById('detected-files');
+                fileList.innerHTML = '';
+                data.environment_scan.items.forEach(file => {
+                    const li = document.createElement('li');
+                    li.innerText = `> ${file}`;
+                    fileList.appendChild(li);
+                });
+
+                console.log("📡 [Swarm] 集群数据同步完成");
+            } catch (error) {
+                console.warn("⏳ [Swarm] 正在同步本地感知脉冲...");
+            }
+        }
+
+        // 首次加载并开启每 30 秒自动同步
+        refreshSwarmStatus();
+        setInterval(refreshSwarmStatus, 30000);
+    </script>
+</body>
+</html>
