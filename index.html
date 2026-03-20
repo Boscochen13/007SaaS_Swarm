@@ -3,107 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>007SaaS_Swarm | 著作者：Chen Changxing</title>
+    <title>007SaaS_Swarm | Global Architecture by Chen Changxing</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root { --bg: #020617; }
         body { background-color: var(--bg); color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
-        .gradient-text { background: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-text { background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .glass { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); }
-        .depth-card { border-left: 2px solid #334155; transition: all 0.3s; }
-        .depth-card:hover { border-left-color: #3b82f6; background: rgba(59, 130, 246, 0.03); }
-        .badge { background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-family: monospace; }
+        .lang-btn { cursor: pointer; transition: all 0.3s; opacity: 0.5; }
+        .lang-btn.active { opacity: 1; color: #60a5fa; font-weight: bold; border-bottom: 2px solid #60a5fa; }
+        [data-lang] { display: none; }
     </style>
 </head>
 <body class="antialiased">
 
-    <header class="py-20 px-6 border-b border-white/5 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-950 to-slate-950">
+    <nav class="fixed top-6 right-6 z-50 glass px-4 py-2 rounded-full flex gap-4 text-xs font-mono">
+        <span onclick="setLang('zh')" id="btn-zh" class="lang-btn active">CN</span>
+        <span onclick="setLang('en')" id="btn-en" class="lang-btn">EN</span>
+        <span onclick="setLang('jp')" id="btn-jp" class="lang-btn">JP</span>
+    </nav>
+
+    <header class="py-24 px-6 text-center border-b border-white/5">
         <div class="container mx-auto max-w-5xl">
-            <div class="mb-6 flex items-center gap-4">
-                <span class="badge">VERSION 0.6.0</span>
-                <span class="badge">IP: CHEN_CHANGXING</span>
-            </div>
-            <h1 class="text-5xl md:text-7xl font-black mb-8">
-                从单体工具到 <span class="gradient-text">意志集群</span>
+            <h1 class="text-5xl md:text-7xl font-black mb-8 tracking-tight">
+                <span data-lang="zh">意志集群：自主演进协议</span>
+                <span data-lang="en">Swarm Intelligence: Autonomous Protocol</span>
+                <span data-lang="jp">意志の集合体：自律進化プロトコル</span>
             </h1>
-            <p class="text-xl text-slate-400 max-w-3xl leading-relaxed">
-                当前的 AI 瓶颈不在于模型参数，而在于<strong>编排效率</strong>。007SaaS_Swarm 是我对未来“自主演进数字生命”的一次架构实践。
+            <div class="inline-block px-6 py-2 glass rounded-xl border-blue-500/30 mb-8">
+                <p class="text-sm font-mono text-blue-400">
+                    <span data-lang="zh">思路著作者：陈长兴 (Chen Changxing)</span>
+                    <span data-lang="en">Original Architect: Chen Changxing</span>
+                    <span data-lang="jp">原案著者：陳 長興 (Chen Changxing)</span>
+                </p>
+            </div>
+            <p class="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
+                <span data-lang="zh">通过 FlowMesh™ 架构，我们重新定义了 AI 智能体的协作边界。</span>
+                <span data-lang="en">Redefining the collaborative boundaries of AI agents via the FlowMesh™ architecture.</span>
+                <span data-lang="jp">FlowMesh™アーキテクチャを通じて、AIエージェントの協調境界を再定義します。</span>
             </p>
         </div>
     </header>
 
-    <main class="container mx-auto max-w-5xl px-6 py-20 space-y-24">
+    <main class="container mx-auto max-w-5xl px-6 py-20 space-y-20">
         
-        <section class="grid md:grid-cols-12 gap-12 items-start">
-            <div class="md:col-span-4 sticky top-24">
-                <h2 class="text-3xl font-bold text-blue-400">01. FlowMesh™<br>异步动态编排</h2>
-                <p class="mt-4 text-sm text-slate-500 font-mono tracking-tighter">THE NEURAL BUS OF SWARM</p>
+        <section class="grid md:grid-cols-2 gap-12 items-center glass p-8 rounded-3xl">
+            <div>
+                <h2 class="text-3xl font-bold mb-6 text-blue-400 font-mono tracking-tighter">01. FlowMesh™</h2>
+                <div class="text-slate-300 space-y-4">
+                    <div data-lang="zh">
+                        <p class="font-bold text-white">异步编排：解决长链条任务的“上下文塌缩”问题。</p>
+                        <p class="text-sm">传统 AI 采用线性执行，而 FlowMesh 允许任务在集群中像神经信号一样动态流动，实现毫秒级的跨模型调度。</p>
+                    </div>
+                    <div data-lang="en">
+                        <p class="font-bold text-white">Async Orchestration: Solving "Context Collapse" in long-chain tasks.</p>
+                        <p class="text-sm">While traditional AI is linear, FlowMesh allows tasks to flow like neural signals, enabling millisecond cross-model scheduling.</p>
+                    </div>
+                    <div data-lang="jp">
+                        <p class="font-bold text-white">非同期オーケストレーション：コンテキスト崩壊の解決。</p>
+                        <p class="text-sm">従来のAIが線形であるのに対し、FlowMeshはタスクを神経信号のように流し、ミリ秒単位のクロスモデルスケジューリングを実現します。</p>
+                    </div>
+                </div>
             </div>
-            <div class="md:col-span-8 space-y-6">
-                <div class="glass p-8 rounded-2xl depth-card">
-                    <h3 class="text-xl font-bold mb-4">核心看法：拒绝“提问-回答”的单线逻辑</h3>
-                    <p class="text-slate-300 leading-loose">
-                        我认为未来的 AI 不应被动等待指令。FlowMesh 模仿的是生物神经总线，任务在集群中不是被分发的，而是被<strong>流动吸纳</strong>的。它解决了长链条任务中的“上下文塌缩”问题。
-                    </p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
-                        <h4 class="text-blue-300 font-bold mb-2 text-sm italic">具体难点</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">在高并发状态下，如何保证多个 Agent 之间的状态同步而不产生“逻辑幻觉”冲突？这需要极强的状态机设计能力。</p>
-                    </div>
-                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
-                        <h4 class="text-teal-300 font-bold mb-2 text-sm italic">行业前景</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">FlowMesh 将成为复杂 SaaS 自动化的骨架，让 AI 能够自主完成从需求分析到代码上线的全流程闭环。</p>
-                    </div>
-                </div>
+            <div class="bg-blue-500/5 h-40 rounded-2xl border border-blue-500/10 flex items-center justify-center font-mono text-blue-800 text-xs">
+                // SYSTEM_LOG: FLOW_MESH_ACTIVATED
             </div>
         </section>
 
-        <section class="grid md:grid-cols-12 gap-12 items-start">
-            <div class="md:col-span-4 sticky top-24 text-right md:text-left">
-                <h2 class="text-3xl font-bold text-purple-400">02. AgentNet™<br>分布式协作协议</h2>
-                <p class="mt-4 text-sm text-slate-500 font-mono tracking-tighter">PROTOCOL FOR AUTONOMOUS COLLABORATION</p>
+        <section class="grid md:grid-cols-2 gap-12 items-center glass p-8 rounded-3xl">
+            <div class="order-2 md:order-1 bg-purple-500/5 h-40 rounded-2xl border border-purple-500/10 flex items-center justify-center font-mono text-purple-800 text-xs">
+                // PROTOCOL: AGENT_NET_SYNC
             </div>
-            <div class="md:col-span-8 space-y-6">
-                <div class="glass p-8 rounded-2xl depth-card">
-                    <h3 class="text-xl font-bold mb-4">核心看法：去中心化的“集体意志”</h3>
-                    <p class="text-slate-300 leading-loose">
-                        AgentNet 解决的是 Agent 之间的<strong>信任与审计</strong>。在一个蜂群中，Gemini 生成的代码，必须由 Minimax 或其他模型进行异构审计。通过协议约束，实现 1+1>2 的智能涌现。
-                    </p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
-                        <h4 class="text-purple-300 font-bold mb-2 text-sm italic">具体难点</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">不同厂商模型 API 的延迟抖动与配额限制。AgentNet 需要实现类似“熔断器”的机制，在瞬时失效时自动重路由。</p>
+            <div class="order-1 md:order-2">
+                <h2 class="text-3xl font-bold mb-6 text-purple-400 font-mono tracking-tighter">02. AgentNet™</h2>
+                <div class="text-slate-300 space-y-4">
+                    <div data-lang="zh">
+                        <p class="font-bold text-white">分布式协作：构建跨厂商模型的“集体意志”。</p>
+                        <p class="text-sm">通过去中心化协议，实现 Gemini 生成与 Minimax 审计的异构闭环，彻底解决单点故障。 </p>
                     </div>
-                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
-                        <h4 class="text-pink-300 font-bold mb-2 text-sm italic">行业前景</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">这是通往 AGI 的必经之路。未来不再有单一的“最强模型”，只有最强的“模型协议网络”。</p>
+                    <div data-lang="en">
+                        <p class="font-bold text-white">Distributed Collaboration: Building a "Collective Will".</p>
+                        <p class="text-sm">Decentralized protocols enable a closed-loop between generation (Gemini) and auditing (Minimax), eliminating single points of failure.</p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="grid md:grid-cols-12 gap-12 items-start">
-            <div class="md:col-span-4 sticky top-24">
-                <h2 class="text-3xl font-bold text-teal-400">03. 算力韧性<br>无问芯穹与适配</h2>
-                <p class="mt-4 text-sm text-slate-500 font-mono tracking-tighter">COMPUTATIONAL RESILIENCE</p>
-            </div>
-            <div class="md:col-span-8 space-y-6">
-                <div class="glass p-8 rounded-2xl depth-card">
-                    <h3 class="text-xl font-bold mb-4">核心看法：代码即算力，算力即自由</h3>
-                    <p class="text-slate-300 leading-loose">
-                        真正的技术主权源于对底层算力的灵活适配。通过对接无问芯穹等平台，007SaaS_Swarm 致力于让蜂群在国产芯片与国际芯片之间平滑迁移，彻底解决“算力孤岛”问题。
-                    </p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
-                        <h4 class="text-teal-300 font-bold mb-2 text-sm italic">具体难点</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">国产异构芯片的算子优化与量化模型适配。这不仅是软件层面的工作，更是对底层硬件生态的深刻理解。</p>
-                    </div>
-                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
-                        <h4 class="text-green-300 font-bold mb-2 text-sm italic">行业前景</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed">在复杂国际环境下，具备多芯片适配能力的 Agent 框架将是国内 AI 企业的核心资产。</p>
+                    <div data-lang="jp">
+                        <p class="font-bold text-white">分散型協調：「集団意志」の構築。</p>
+                        <p class="text-sm">分散型プロトコルにより、生成（Gemini）と監査（Minimax）のクローズドループを実現し、単一障害点を排除します。</p>
                     </div>
                 </div>
             </div>
@@ -111,26 +95,48 @@
 
     </main>
 
-    <section class="py-24 border-t border-white/10 bg-blue-600/5">
+    <section class="py-24 border-t border-white/5">
         <div class="container mx-auto max-w-3xl px-6 text-center">
-            <h2 class="text-3xl font-bold mb-8 italic">“我正在寻找志同道合的实验室或团队”</h2>
-            <p class="text-slate-400 mb-12">
-                如果您对以上架构有共鸣，或正在寻找能够从<strong>协议层</strong>思考 AI 进化的开发者，欢迎随时联系。我不仅提供代码，更提供一套完整的分布式 AI 演进思路。
-            </p>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-8">
-                <a href="mailto:chenchangxing52@gmail.com" class="bg-blue-600 hover:bg-blue-700 text-white px-12 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-xl shadow-blue-500/20">
-                    📧 发送邮件: chenchangxing52@gmail.com
+            <h2 class="text-3xl font-bold mb-10">
+                <span data-lang="zh">联络著作者</span>
+                <span data-lang="en">Contact the Architect</span>
+                <span data-lang="jp">著者に連絡する</span>
+            </h2>
+            <div class="glass p-10 rounded-[3rem] border-blue-500/20">
+                <p class="text-lg mb-8 text-slate-300">
+                    <span data-lang="zh">寻找 AI 研发 / 架构设计岗位，共同构建 AGI 未来。</span>
+                    <span data-lang="en">Seeking AI R&D / Architecture roles to build the future of AGI.</span>
+                    <span data-lang="jp">AIの研究開発・アーキテクチャ設計の職を求めています。AGIの未来を共に築きましょう。</span>
+                </p>
+                <a href="mailto:chenchangxing52@gmail.com" class="inline-block bg-white text-black px-12 py-4 rounded-full font-bold hover:bg-blue-500 hover:text-white transition-all transform hover:scale-105">
+                    chenchangxing52@gmail.com
                 </a>
-                <div class="text-slate-500 font-mono text-sm">
-                    思路著作者: 陈长兴 (Chen Changxing)
-                </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 text-center text-slate-700 text-xs uppercase tracking-widest font-mono">
-        &copy; 2026 007SaaS_Swarm // IP PROTECTED BY AUTHOR // EVOLVING...
-    </footer>
+    <script>
+        function setLang(lang) {
+            // 切换所有带有 data-lang 属性的元素
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                el.style.display = el.getAttribute('data-lang') === lang ? 'inline-block' : 'none';
+                if (el.tagName === 'P' || el.tagName === 'DIV' || el.tagName === 'SPAN') {
+                    if (el.getAttribute('data-lang') === lang) el.style.display = 'block';
+                }
+            });
+
+            // 切换按钮状态
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+
+            // 记录语言偏好
+            localStorage.setItem('pref-lang', lang);
+        }
+
+        // 初始化语言
+        const savedLang = localStorage.getItem('pref-lang') || 'zh';
+        setLang(savedLang);
+    </script>
 
 </body>
 </html>
