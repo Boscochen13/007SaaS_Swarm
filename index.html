@@ -3,177 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>007SaaS_Swarm | Global Architecture by Chen Changxing</title>
+    <title>007SaaS Swarm | AI Immunological Defense</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#58a6ff">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2592/2592231.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --bg: #020617; }
-        body { background-color: var(--bg); color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
-        .gradient-text { background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); }
-        .lang-btn { cursor: pointer; transition: all 0.3s; opacity: 0.5; }
-        .lang-btn.active { opacity: 1; color: #60a5fa; font-weight: bold; border-bottom: 2px solid #60a5fa; }
+        :root { --bg: #010409; --blue: #58a6ff; --purple: #bc8cff; }
+        body { background-color: var(--bg); color: #e6edf3; font-family: 'Inter', -apple-system, sans-serif; scroll-behavior: smooth; }
+        .gradient-text { background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass { background: rgba(22, 27, 34, 0.8); border: 1px solid rgba(240, 246, 252, 0.1); backdrop-filter: blur(12px); transition: all 0.3s; }
+        .glass:hover { border-color: var(--blue); box-shadow: 0 0 20px rgba(88, 166, 255, 0.15); }
+        .lang-btn { cursor: pointer; opacity: 0.5; transition: all 0.3s; padding: 4px 8px; border-radius: 6px; }
+        .lang-btn.active { opacity: 1; color: var(--blue); background: rgba(88, 166, 255, 0.1); font-weight: bold; }
         [data-lang] { display: none; }
+        
+        /* 呼应抗体生成的脉冲效果 */
+        .pulse-border { position: relative; }
+        .pulse-border::after {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            border: 1px solid var(--blue); animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.05); opacity: 0; } }
     </style>
 </head>
 <body class="antialiased">
 
-    <nav class="fixed top-6 right-6 z-50 glass px-4 py-2 rounded-full flex gap-4 text-xs font-mono">
-        <span onclick="setLang('zh')" id="btn-zh" class="lang-btn active">CN</span>
-        <span onclick="setLang('en')" id="btn-en" class="lang-btn">EN</span>
-        <span onclick="setLang('jp')" id="btn-jp" class="lang-btn">JP</span>
+    <nav class="fixed top-0 w-full z-50 glass border-b border-white/5 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span class="text-xs font-mono tracking-tighter text-slate-400">SWARM_OS V0.9.0</span>
+        </div>
+        <div class="flex gap-4 text-xs font-mono">
+            <span onclick="setLang('zh')" id="btn-zh" class="lang-btn active">CN</span>
+            <span onclick="setLang('en')" id="btn-en" class="lang-btn">EN</span>
+            <span onclick="setLang('jp')" id="btn-jp" class="lang-btn">JP</span>
+        </div>
     </nav>
 
-    <header class="py-24 px-6 text-center border-b border-white/5">
-        <div class="container mx-auto max-w-5xl">
-            <h1 class="text-5xl md:text-7xl font-black mb-8 tracking-tight">
-                <span data-lang="zh">意志集群：自主演进协议</span>
-                <span data-lang="en">Swarm Intelligence: Autonomous Protocol</span>
-                <span data-lang="jp">意志の集合体：自律進化プロトコル</span>
+    <header class="pt-40 pb-20 px-6 text-center bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent">
+        <div class="container mx-auto max-w-4xl">
+            <h1 class="text-5xl md:text-7xl font-black mb-8">
+                <span data-lang="zh">数字生命的 <span class="gradient-text">免疫演进</span></span>
+                <span data-lang="en">Digital Life <span class="gradient-text">Immune Evolution</span></span>
+                <span data-lang="jp">デジタル生命の <span class="gradient-text">免疫進化</span></span>
             </h1>
-            <div class="inline-block px-6 py-2 glass rounded-xl border-blue-500/30 mb-8">
-                <p class="text-sm font-mono text-blue-400">
-                    <span data-lang="zh">思路著作者：陈长兴 (Chen Changxing)</span>
-                    <span data-lang="en">Original Architect: Chen Changxing</span>
-                    <span data-lang="jp">原案著者：陳 長興 (Chen Changxing)</span>
-                </p>
-            </div>
-            <p class="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
-                <span data-lang="zh">通过 FlowMesh™ 架构，我们重新定义了 AI 智能体的协作边界。</span>
-                <span data-lang="en">Redefining the collaborative boundaries of AI agents via the FlowMesh™ architecture.</span>
-                <span data-lang="jp">FlowMesh™アーキテクチャを通じて、AIエージェントの協調境界を再定義します。</span>
+            <p class="text-xl text-slate-400 leading-relaxed mb-10">
+                <span data-lang="zh">由陈长兴 (Chen Changxing) 原创设计的 FlowMesh™ 架构：赋予 SaaS 系统如生物般的“数字抗体”生成能力。</span>
+                <span data-lang="en">Original FlowMesh™ architecture by Chen Changxing: Empowering SaaS with biological-grade "Digital Antibody" generation.</span>
+                <span data-lang="jp">陳 長興による FlowMesh™：SaaSシステムに生物学的な「デジタル抗体」生成能力を付与します。</span>
             </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="war.html" class="pulse-border bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-500 transition-all">
+                    <span data-lang="zh">进入攻防演练室</span><span data-lang="en">Enter War Room</span><span data-lang="jp">演習室に入る</span>
+                </a>
+                <a href="#logic" class="glass px-8 py-3 rounded-xl font-bold hover:bg-white/5">
+                    <span data-lang="zh">深入核心逻辑</span><span data-lang="en">Deep Dive</span><span data-lang="jp">コアロジック</span>
+                </a>
+            </div>
         </div>
     </header>
-    <section class="py-12 border-t border-white/5">
-            <h2 class="text-2xl font-bold mb-8 gradient-text">
-                <span data-lang="zh">演进路线图</span>
-                <span data-lang="en">Evolution Roadmap</span>
-                <span data-lang="jp">進化ロードマップ</span>
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
-                <div class="p-4 glass rounded-xl opacity-50">
-                    <p class="text-blue-400 mb-2">V0.1 - V0.5</p>
-                    <p data-lang="zh">核心架构定义与 MASTER.py 闭环实现</p>
-                    <p data-lang="en">Core architecture definition & MASTER.py closed-loop.</p>
-                    <p data-lang="jp">コアアーキテクチャ定義とMASTER.pyの閉ループ実現。</p>
-                </div>
-                <div class="p-4 glass rounded-xl border-blue-500/50">
-                    <p class="text-blue-400 mb-2">V0.7 [CURRENT]</p>
-                    <p data-lang="zh">多语言国际化协议与全球著作者声明</p>
-                    <p data-lang="en">Global i18n protocol & architect manifesto.</p>
-                    <p data-lang="jp">多言語国際化プロトコルとグローバル著者宣言。</p>
-                </div>
-                <div class="p-4 glass rounded-xl border-dashed border-white/20">
-                    <p class="text-purple-400 mb-2">V1.0 [FUTURE]</p>
-                    <p data-lang="zh">完全去中心化的蜂群自愈网络实现</p>
-                    <p data-lang="en">Full decentralized self-healing swarm network.</p>
-                    <p data-lang="jp">完全分散型スウォーム自己修復ネットワークの実現。</p>
-                </div>
-            </div>
-        </section>
 
-        <section class="py-12">
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-white/5 rounded-md text-[10px] text-slate-400">#Python</span>
-                <span class="px-3 py-1 bg-white/5 rounded-md text-[10px] text-slate-400">#Gemini_Pro_Vision</span>
-                <span class="px-3 py-1 bg-white/5 rounded-md text-[10px] text-slate-400">#Minimax_LLM</span>
-                <span class="px-3 py-1 bg-white/5 rounded-md text-[10px] text-slate-400">#Git_Workflow</span>
-                <span class="px-3 py-1 bg-white/5 rounded-md text-[10px] text-slate-400">#Distributed_Systems</span>
-                <span class="px-3 py-1 bg-white/5 rounded-md text-[10px] text-slate-400">#FlowMesh_Protocol</span>
-            </div>
-        </section>
-    <main class="container mx-auto max-w-5xl px-6 py-20 space-y-20">
+    <main id="logic" class="container mx-auto max-w-5xl px-6 py-20 space-y-20">
         
-        <section class="grid md:grid-cols-2 gap-12 items-center glass p-8 rounded-3xl">
-            <div>
-                <h2 class="text-3xl font-bold mb-6 text-blue-400 font-mono tracking-tighter">01. FlowMesh™</h2>
-                <div class="text-slate-300 space-y-4">
-                    <div data-lang="zh">
-                        <p class="font-bold text-white">异步编排：解决长链条任务的“上下文塌缩”问题。</p>
-                        <p class="text-sm">传统 AI 采用线性执行，而 FlowMesh 允许任务在集群中像神经信号一样动态流动，实现毫秒级的跨模型调度。</p>
-                    </div>
-                    <div data-lang="en">
-                        <p class="font-bold text-white">Async Orchestration: Solving "Context Collapse" in long-chain tasks.</p>
-                        <p class="text-sm">While traditional AI is linear, FlowMesh allows tasks to flow like neural signals, enabling millisecond cross-model scheduling.</p>
-                    </div>
-                    <div data-lang="jp">
-                        <p class="font-bold text-white">非同期オーケストレーション：コンテキスト崩壊の解決。</p>
-                        <p class="text-sm">従来のAIが線形であるのに対し、FlowMeshはタスクを神経信号のように流し、ミリ秒単位のクロスモデルスケジューリングを実現します。</p>
-                    </div>
+        <section class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <h2 class="text-3xl font-bold text-blue-400">
+                    <span data-lang="zh">01. 免疫原性感知</span>
+                    <span data-lang="en">01. Antigenic Sensing</span>
+                    <span data-lang="jp">01. 抗原感知</span>
+                </h2>
+                <div class="text-slate-300 leading-loose">
+                    <span data-lang="zh">黑客 AI 像不断突变的病毒侵入网站。我们的 FlowMesh™ 不依赖静态规则，而是像人类免疫细胞一样感知流量的“异物性”。一旦探测到非正常的逻辑模式，立即触发警报。</span>
+                    <span data-lang="en">Hacker AI invades like a mutating virus. FlowMesh™ doesn't rely on static rules; it senses "non-self" patterns like immune cells, triggering instant alerts upon detecting abnormal logic.</span>
+                    <span data-lang="jp">ハッカーAIは変異し続けるウイルスのようです。FlowMesh™は静的なルールに依存せず、免疫細胞のようにトラフィックの「非自己性」を感知し、異常を検知すると即座に警告を発します。</span>
                 </div>
             </div>
-            <div class="bg-blue-500/5 h-40 rounded-2xl border border-blue-500/10 flex items-center justify-center font-mono text-blue-800 text-xs">
-                // SYSTEM_LOG: FLOW_MESH_ACTIVATED
+            <div class="glass p-8 rounded-3xl border-blue-500/20 text-center font-mono text-xs text-blue-800">
+                [ DETECTING_PATHOGEN... ]<br>
+                [ ANALYSIS: UNKNOWN_MUTATION ]
             </div>
         </section>
 
-        <section class="grid md:grid-cols-2 gap-12 items-center glass p-8 rounded-3xl">
-            <div class="order-2 md:order-1 bg-purple-500/5 h-40 rounded-2xl border border-purple-500/10 flex items-center justify-center font-mono text-purple-800 text-xs">
-                // PROTOCOL: AGENT_NET_SYNC
+        <section class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1 glass p-8 rounded-3xl border-purple-500/20 text-center font-mono text-xs text-purple-800">
+                [ EMERGENCE_PROTOCOL: ACTIVE ]<br>
+                [ ANTIBODY_GENERATED: v2.1.04 ]
             </div>
-            <div class="order-1 md:order-2">
-                <h2 class="text-3xl font-bold mb-6 text-purple-400 font-mono tracking-tighter">02. AgentNet™</h2>
-                <div class="text-slate-300 space-y-4">
-                    <div data-lang="zh">
-                        <p class="font-bold text-white">分布式协作：构建跨厂商模型的“集体意志”。</p>
-                        <p class="text-sm">通过去中心化协议，实现 Gemini 生成与 Minimax 审计的异构闭环，彻底解决单点故障。 </p>
-                    </div>
-                    <div data-lang="en">
-                        <p class="font-bold text-white">Distributed Collaboration: Building a "Collective Will".</p>
-                        <p class="text-sm">Decentralized protocols enable a closed-loop between generation (Gemini) and auditing (Minimax), eliminating single points of failure.</p>
-                    </div>
-                    <div data-lang="jp">
-                        <p class="font-bold text-white">分散型協調：「集団意志」の構築。</p>
-                        <p class="text-sm">分散型プロトコルにより、生成（Gemini）と監査（Minimax）のクローズドループを実現し、単一障害点を排除します。</p>
-                    </div>
+            <div class="order-1 md:order-2 space-y-6">
+                <h2 class="text-3xl font-bold text-purple-400">
+                    <span data-lang="zh">02. 涌现式防御</span>
+                    <span data-lang="en">02. Emergent Defense</span>
+                    <span data-lang="jp">02. 湧出防御</span>
+                </h2>
+                <div class="text-slate-300 leading-loose">
+                    <span data-lang="zh">面对未知的攻击，AgentNet™ 蜂群协作实时“涌现”出全新的防御代码——即数字抗体。这些抗体能精准中和黑客 AI 的攻击向量，实现系统的自我修复与进化。</span>
+                    <span data-lang="en">Against unknown threats, AgentNet™ swarm collaborates to "emerge" new defense code—digital antibodies—in real-time, neutralizing attack vectors and enabling self-healing.</span>
+                    <span data-lang="jp">未知の脅威に対し、AgentNet™スウォームはリアルタイムで新しい防御コード（デジタル抗体）を「湧出」させ、攻撃ベクトルを無効化し、システムの自己修復と進化を実現します。</span>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <section class="py-24 border-t border-white/5">
+    <section class="py-24 border-t border-white/5 bg-slate-900/20">
         <div class="container mx-auto max-w-3xl px-6 text-center">
-            <h2 class="text-3xl font-bold mb-10">
-                <span data-lang="zh">联络著作者</span>
-                <span data-lang="en">Contact the Architect</span>
-                <span data-lang="jp">著者に連絡する</span>
+            <div class="mb-8 inline-block p-4 rounded-full bg-blue-500/10 border border-blue-500/20">
+                <img src="https://cdn-icons-png.flaticon.com/512/2592/2592231.png" class="w-12 h-12 opacity-80" alt="Logo">
+            </div>
+            <h2 class="text-3xl font-bold mb-6">
+                <span data-lang="zh">联络著作者</span><span data-lang="en">Contact the Architect</span><span data-lang="jp">著者に連絡</span>
             </h2>
-            <div class="glass p-10 rounded-[3rem] border-blue-500/20">
-                <p class="text-lg mb-8 text-slate-300">
-                    <span data-lang="zh">寻找 AI 研发 / 架构设计岗位，共同构建 AGI 未来。</span>
-                    <span data-lang="en">Seeking AI R&D / Architecture roles to build the future of AGI.</span>
-                    <span data-lang="jp">AIの研究開発・アーキテクチャ設計の職を求めています。AGIの未来を共に築きましょう。</span>
-                </p>
-                <a href="mailto:chenchangxing52@gmail.com" class="inline-block bg-white text-black px-12 py-4 rounded-full font-bold hover:bg-blue-500 hover:text-white transition-all transform hover:scale-105">
+            <p class="text-slate-400 mb-10">
+                <span data-lang="zh">探讨前沿 AI 架构，或邀约加入您的研发团队。</span>
+                <span data-lang="en">Discuss cutting-edge AI architecture or invite me to your R&D team.</span>
+                <span data-lang="jp">最先端のAIアーキテクチャについての議論や、研究開発チームへの招待をお待ちしています。</span>
+            </p>
+            <div class="flex flex-col items-center gap-4">
+                <a href="mailto:chenchangxing52@gmail.com" class="bg-white text-black px-12 py-4 rounded-2xl font-bold hover:bg-blue-400 hover:text-white transition-all transform hover:scale-105">
                     chenchangxing52@gmail.com
                 </a>
+                <span class="text-slate-600 font-mono text-xs uppercase tracking-widest">Authorized by Chen Changxing</span>
             </div>
         </div>
     </section>
 
     <script>
+        // PWA Service Worker 注册
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(reg => {
+                    console.log('007Swarm PWA Registered.');
+                });
+            });
+        }
+
+        // 语言切换逻辑
         function setLang(lang) {
-            // 切换所有带有 data-lang 属性的元素
             document.querySelectorAll('[data-lang]').forEach(el => {
-                el.style.display = el.getAttribute('data-lang') === lang ? 'inline-block' : 'none';
-                if (el.tagName === 'P' || el.tagName === 'DIV' || el.tagName === 'SPAN') {
-                    if (el.getAttribute('data-lang') === lang) el.style.display = 'block';
+                const target = el.getAttribute('data-lang');
+                if (el.tagName === 'SPAN') {
+                    el.style.display = (target === lang) ? 'inline-block' : 'none';
+                } else {
+                    el.style.display = (target === lang) ? 'block' : 'none';
                 }
             });
-
-            // 切换按钮状态
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('btn-' + lang).classList.add('active');
-
-            // 记录语言偏好
             localStorage.setItem('pref-lang', lang);
         }
 
-        // 初始化语言
         const savedLang = localStorage.getItem('pref-lang') || 'zh';
         setLang(savedLang);
     </script>
-
 </body>
 </html>

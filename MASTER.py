@@ -1,68 +1,77 @@
 import os
 import time
 import subprocess
+import re
 import google.generativeai as genai
+from google.generativeai.types import HarmCategory, HarmBlockThreshold
 from dotenv import load_dotenv
 
-# --- [著作者加速通道] ---
+# --- [著作者核心网络配置] ---
+# 这里直接在系统层面锁定代理，让官方库强制走隧道
 os.environ['HTTP_PROXY'] = 'http://127.0.0.1:7890'
 os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:7890'
-# ----------------------
 
 load_dotenv()
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-def run_gemini_dev(idea):
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        print("❌ [Error] 未发现 API Key")
-        return False
-
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
-    
+def run_evolution(idea):
     try:
         with open("index.html", "r", encoding="utf-8") as f:
-            current_code = f.read()
-
-        prompt = f"你是开发 Agent。修改以下代码以实现：{idea}。要求：保持原有黑绿风格，直接返回完整 HTML，不要 Markdown 标签。\n\n代码如下：\n{current_code}"
-
-        print(f"🧠 [MASTER] 正在强制进化指令: {idea}")
+            code = f.read()
         
-        response = model.generate_content(prompt)
-        new_code = response.text.strip()
+        print(f"🧠 [集群进化] 正在调用 Gemini 2.0 (官方驱动版)...")
+        
+        # 使用官方 SDK 初始化模型，这种方式自带更强的重试机制
+        model = genai.GenerativeModel('gemini-2.0-flash')
+        
+        prompt = f"你是一个顶级前端专家。修改以下HTML实现：{idea}。只返回HTML代码，绝对不要Markdown标签。\n{code}"
+        
+        # 增加安全设置，防止因为内容审查导致的 404/拒绝
+        safety_settings = {
+            HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+            HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+        }
 
-        # 核心清洗逻辑：防止 Markdown 格式破坏网页
-        clean_code = new_code.replace("```html", "").replace("```", "").strip()
+        # 官方库自带内部重试，比 requests 手写循环更稳
+        response = model.generate_content(prompt, safety_settings=safety_settings)
+        
+        if response.text:
+            final_code = re.sub(r'```(?:html)?', '', response.text).strip()
+            with open("index.html", "w", encoding="utf-8") as f:
+                f.write(final_code)
+            print("💾 [SUCCESS] 本地改写成功！")
+            return True
+        else:
+            print("❌ API 返回内容为空")
+            return False
 
-        # --- 著作者改动：取消确认，直接写入 ---
-        with open("index.html", "w", encoding="utf-8") as f:
-            f.write(clean_code)
-        print("💾 [SUCCESS] 核心代码已成功写入 index.html！")
-        return True
-            
     except Exception as e:
-        print(f"❌ [进化失败]: {e}")
+        # 如果还是报错，检查是不是配额问题
+        if "429" in str(e):
+            print("⏳ [QUOTA] 触发频率限制，建议手工休息 1 分钟再试。")
+        else:
+            print(f"❌ 系统抖动错误: {e}")
         return False
 
-def main():
-    print("\n--- 007SaaS SWARM 全自动进化启动 ---")
-    
-    # 强制获取指令
-    idea = input("\n💡 著作者指令 (例如：在页面底部加一个红色霓虹按钮): ")
-    
-    if idea.strip():
-        # 执行进化并写入
-        run_gemini_dev(idea)
-        
-        # 写入成功后，立刻执行 Git 同步
-        print("\n🌐 [MASTER] 正在同步至全球节点...")
-        subprocess.run("git add .", shell=True)
-        commit_msg = f"Auto-Evolution: {time.strftime('%Y%m%d-%H%M')}"
+def sync_to_github():
+    print("🌐 [GITHUB] 正在同步...")
+    try:
+        subprocess.run("git add index.html", shell=True)
+        commit_msg = f"AI_Evolution_{time.strftime('%Y%m%d_%H%M%S')}"
         subprocess.run(f'git commit -m "{commit_msg}"', shell=True)
+        # 推送时不再受 Python 内部代理影响，走 Git 自身配置
         subprocess.run("git push origin main", shell=True)
-        print(f"\n✨ [SUCCESS] 进化已同步！更新时间: {time.strftime('%H:%M:%S')}")
-    else:
-        print("⏩ 无指令输入，集群保持静默。")
+        print("✨ [SUCCESS] 进化已同步 GitHub！")
+    except Exception as e:
+        print(f"⚠️ Git 同步异常: {e}")
 
-if __name__ == "__main__":
-    main()
+# --- 暴力启动测试版 ---
+print("\n🔥 正在强制启动 007SaaS SWARM 引擎...")
+try:
+    idea = input("\n💡 请直接输入指令: ")
+    if idea.strip():
+        # 这里直接手动调用演化函数
+        if run_evolution(idea):
+            sync_to_github()
+except Exception as e:
+    print(f"❌ 启动过程崩溃: {e}")
