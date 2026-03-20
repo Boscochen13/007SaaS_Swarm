@@ -3,94 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>007SaaS_Swarm | 去中心化AI智能体蜂群协议</title>
-    <meta name="description" content="007SaaS_Swarm：探索FlowMesh架构与AgentNet框架，构建具备自我演进能力的AI生命体蜂群。">
-    <meta name="keywords" content="AI智能集群, FlowMesh, AgentNet, 无问苍穹, AI自动化, 007SaaS, 数字生命">
+    <title>007SaaS_Swarm | 著作者：Chen Changxing</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --bg: #030712; --accent: #3b82f6; }
-        body { background-color: var(--bg); color: #f1f5f9; font-family: 'Segoe UI', Roboto, sans-serif; scroll-behavior: smooth; }
-        .gradient-text { background: linear-gradient(135deg, #60a5fa, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); }
-        .tech-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .tech-card:hover { transform: scale(1.02); border-color: var(--accent); box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3); }
+        :root { --bg: #020617; }
+        body { background-color: var(--bg); color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
+        .gradient-text { background: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); }
+        .depth-card { border-left: 2px solid #334155; transition: all 0.3s; }
+        .depth-card:hover { border-left-color: #3b82f6; background: rgba(59, 130, 246, 0.03); }
+        .badge { background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-family: monospace; }
     </style>
 </head>
 <body class="antialiased">
 
-    <header class="min-h-screen flex flex-col justify-center items-center px-6 text-center">
-        <div class="inline-block px-4 py-1 mb-6 text-xs font-mono text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full animate-pulse">
-            SYSTEM_STATUS: EVOLVING_STABLE
-        </div>
-        <h1 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter">
-            <span class="gradient-text">007SaaS_Swarm</span>
-        </h1>
-        <p class="text-xl md:text-2xl text-slate-400 max-w-3xl leading-relaxed">
-            我们正在终结“单机AI”时代。基于 <span class="text-white font-bold">FlowMesh</span> 架构，构建一个能够自我思考、自动编码、集群协作的数字生命蜂群。
-        </p>
-        <div class="mt-12 flex gap-4">
-            <a href="#vision" class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-blue-500/20">了解愿景</a>
-            <a href="mailto:chenchangxing52@gmail.com" class="glass px-10 py-4 rounded-2xl font-bold hover:bg-white/5 transition-all">联系著作者</a>
+    <header class="py-20 px-6 border-b border-white/5 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-950 to-slate-950">
+        <div class="container mx-auto max-w-5xl">
+            <div class="mb-6 flex items-center gap-4">
+                <span class="badge">VERSION 0.6.0</span>
+                <span class="badge">IP: CHEN_CHANGXING</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black mb-8">
+                从单体工具到 <span class="gradient-text">意志集群</span>
+            </h1>
+            <p class="text-xl text-slate-400 max-w-3xl leading-relaxed">
+                当前的 AI 瓶颈不在于模型参数，而在于<strong>编排效率</strong>。007SaaS_Swarm 是我对未来“自主演进数字生命”的一次架构实践。
+            </p>
         </div>
     </header>
 
-    <section id="vision" class="container mx-auto px-6 py-24">
-        <div class="text-center mb-20">
-            <h2 class="text-4xl font-bold mb-4">技术内核与生态矩阵</h2>
-            <p class="text-slate-500">从单一指令到意志集群的跨越</p>
-        </div>
+    <main class="container mx-auto max-w-5xl px-6 py-20 space-y-24">
         
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="glass p-10 rounded-3xl tech-card">
-                <h3 class="text-2xl font-bold text-blue-400 mb-4">FlowMesh 异步编排</h3>
-                <p class="text-slate-400 leading-loose">
-                    不同于传统的顺序执行，FlowMesh 允许集群中的智能体像网格一样感知环境流。当 MASTER.py 触发指令时，蜂群节点会根据算力负载与模型擅长领域（如 Gemini 的长文本处理、Minimax 的逻辑审计）自动分配权重。
-                </p>
+        <section class="grid md:grid-cols-12 gap-12 items-start">
+            <div class="md:col-span-4 sticky top-24">
+                <h2 class="text-3xl font-bold text-blue-400">01. FlowMesh™<br>异步动态编排</h2>
+                <p class="mt-4 text-sm text-slate-500 font-mono tracking-tighter">THE NEURAL BUS OF SWARM</p>
             </div>
-            <div class="glass p-10 rounded-3xl tech-card">
-                <h3 class="text-2xl font-bold text-teal-400 mb-4">AgentNet 去中心化协议</h3>
-                <p class="text-slate-400 leading-loose">
-                    解决 AI 系统的高可用性痛点。通过 AgentNet 框架，我们的集群不依赖于单一 API 路径。即使遇到 Quota Exceeded 或网络波动，蜂群也会通过对等发现（P2P）逻辑自动切换至备份节点，确保进化永不停歇。
-                </p>
+            <div class="md:col-span-8 space-y-6">
+                <div class="glass p-8 rounded-2xl depth-card">
+                    <h3 class="text-xl font-bold mb-4">核心看法：拒绝“提问-回答”的单线逻辑</h3>
+                    <p class="text-slate-300 leading-loose">
+                        我认为未来的 AI 不应被动等待指令。FlowMesh 模仿的是生物神经总线，任务在集群中不是被分发的，而是被<strong>流动吸纳</strong>的。它解决了长链条任务中的“上下文塌缩”问题。
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
+                        <h4 class="text-blue-300 font-bold mb-2 text-sm italic">具体难点</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">在高并发状态下，如何保证多个 Agent 之间的状态同步而不产生“逻辑幻觉”冲突？这需要极强的状态机设计能力。</p>
+                    </div>
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
+                        <h4 class="text-teal-300 font-bold mb-2 text-sm italic">行业前景</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">FlowMesh 将成为复杂 SaaS 自动化的骨架，让 AI 能够自主完成从需求分析到代码上线的全流程闭环。</p>
+                    </div>
+                </div>
             </div>
-            <div class="glass p-10 rounded-3xl tech-card">
-                <h3 class="text-2xl font-bold text-purple-400 mb-4">无问芯穹 (Agentic Infra)</h3>
-                <p class="text-slate-400 leading-loose">
-                    底层算力的极致优化方案。我们正在适配国产异构芯片环境，让智能体蜂群在不同架构的服务器上都能实现“即插即用”，真正实现 AI 生命体的物理独立性。
-                </p>
-            </div>
-            <div class="glass p-10 rounded-3xl tech-card border-blue-500/30">
-                <h3 class="text-2xl font-bold text-white mb-4">M2.7 自我更迭代逻辑</h3>
-                <p class="text-slate-400 leading-loose">
-                    集成 Minimax 最新模型能力，集群不仅是在执行任务，而是在“审计自身”。每一行由 AI 生成的代码都会经过另一组 Agent 的逻辑对齐，实现从“人工干预”到“自主演进”的闭环。
-                </p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="container mx-auto px-6 py-24 border-t border-white/5">
-        <div class="max-w-4xl mx-auto glass p-12 rounded-[3rem] text-center border-blue-500/20">
-            <h2 class="text-3xl font-bold mb-6 text-white">与著作者探讨前沿</h2>
-            <p class="text-slate-400 mb-10 text-lg">
-                你是对 **去中心化 AI**、**智能体蜂群** 或 **自动化演进逻辑** 有独特见解的研究者或开发者吗？<br>
-                欢迎联络，共同推进 AI 生命体的伟大构想。
+        <section class="grid md:grid-cols-12 gap-12 items-start">
+            <div class="md:col-span-4 sticky top-24 text-right md:text-left">
+                <h2 class="text-3xl font-bold text-purple-400">02. AgentNet™<br>分布式协作协议</h2>
+                <p class="mt-4 text-sm text-slate-500 font-mono tracking-tighter">PROTOCOL FOR AUTONOMOUS COLLABORATION</p>
+            </div>
+            <div class="md:col-span-8 space-y-6">
+                <div class="glass p-8 rounded-2xl depth-card">
+                    <h3 class="text-xl font-bold mb-4">核心看法：去中心化的“集体意志”</h3>
+                    <p class="text-slate-300 leading-loose">
+                        AgentNet 解决的是 Agent 之间的<strong>信任与审计</strong>。在一个蜂群中，Gemini 生成的代码，必须由 Minimax 或其他模型进行异构审计。通过协议约束，实现 1+1>2 的智能涌现。
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
+                        <h4 class="text-purple-300 font-bold mb-2 text-sm italic">具体难点</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">不同厂商模型 API 的延迟抖动与配额限制。AgentNet 需要实现类似“熔断器”的机制，在瞬时失效时自动重路由。</p>
+                    </div>
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
+                        <h4 class="text-pink-300 font-bold mb-2 text-sm italic">行业前景</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">这是通往 AGI 的必经之路。未来不再有单一的“最强模型”，只有最强的“模型协议网络”。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid md:grid-cols-12 gap-12 items-start">
+            <div class="md:col-span-4 sticky top-24">
+                <h2 class="text-3xl font-bold text-teal-400">03. 算力韧性<br>无问芯穹与适配</h2>
+                <p class="mt-4 text-sm text-slate-500 font-mono tracking-tighter">COMPUTATIONAL RESILIENCE</p>
+            </div>
+            <div class="md:col-span-8 space-y-6">
+                <div class="glass p-8 rounded-2xl depth-card">
+                    <h3 class="text-xl font-bold mb-4">核心看法：代码即算力，算力即自由</h3>
+                    <p class="text-slate-300 leading-loose">
+                        真正的技术主权源于对底层算力的灵活适配。通过对接无问芯穹等平台，007SaaS_Swarm 致力于让蜂群在国产芯片与国际芯片之间平滑迁移，彻底解决“算力孤岛”问题。
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
+                        <h4 class="text-teal-300 font-bold mb-2 text-sm italic">具体难点</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">国产异构芯片的算子优化与量化模型适配。这不仅是软件层面的工作，更是对底层硬件生态的深刻理解。</p>
+                    </div>
+                    <div class="p-6 bg-slate-900/50 rounded-xl border border-white/5">
+                        <h4 class="text-green-300 font-bold mb-2 text-sm italic">行业前景</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">在复杂国际环境下，具备多芯片适配能力的 Agent 框架将是国内 AI 企业的核心资产。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <section class="py-24 border-t border-white/10 bg-blue-600/5">
+        <div class="container mx-auto max-w-3xl px-6 text-center">
+            <h2 class="text-3xl font-bold mb-8 italic">“我正在寻找志同道合的实验室或团队”</h2>
+            <p class="text-slate-400 mb-12">
+                如果您对以上架构有共鸣，或正在寻找能够从<strong>协议层</strong>思考 AI 进化的开发者，欢迎随时联系。我不仅提供代码，更提供一套完整的分布式 AI 演进思路。
             </p>
-            <div class="inline-flex flex-col md:flex-row items-center gap-6">
-                <div class="text-left px-8 py-4 bg-slate-900 rounded-2xl border border-white/10 font-mono">
-                    <span class="text-slate-500">EMAIL:</span> 
-                    <a href="mailto:chenchangxing52@gmail.com" class="text-blue-400 hover:text-blue-300 ml-2">chenchangxing52@gmail.com</a>
-                </div>
-                <div class="text-left px-8 py-4 bg-slate-900 rounded-2xl border border-white/10 font-mono">
-                    <span class="text-slate-500">GITHUB:</span> 
-                    <a href="https://github.com/Boscochen13" class="text-teal-400 hover:text-teal-300 ml-2">Boscochen13</a>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+                <a href="mailto:chenchangxing52@gmail.com" class="bg-blue-600 hover:bg-blue-700 text-white px-12 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-xl shadow-blue-500/20">
+                    📧 发送邮件: chenchangxing52@gmail.com
+                </a>
+                <div class="text-slate-500 font-mono text-sm">
+                    思路著作者: 陈长兴 (Chen Changxing)
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 text-center text-slate-600 text-sm">
-        <p>© 2026 007SaaS_Swarm | 思路著作者：Chen Changxing</p>
-        <p class="mt-2">Evolutionary Protocol Driven by Gemini & Minimax Ecosystem</p>
+    <footer class="py-10 text-center text-slate-700 text-xs uppercase tracking-widest font-mono">
+        &copy; 2026 007SaaS_Swarm // IP PROTECTED BY AUTHOR // EVOLVING...
     </footer>
 
 </body>
