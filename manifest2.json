@@ -1,0 +1,16 @@
+{
+  "name": "007SaaS Swarm AI",
+  "short_name": "007Swarm",
+  "description": "AI Immunological Defense Protocol by Chen Changxing",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#010409",
+  "theme_color": "#58a6ff",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2592/2592231.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

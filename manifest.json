@@ -1,16 +1,24 @@
 {
-  "name": "007SaaS Swarm AI",
+  "name": "007SaaS Swarm · AI Immune Defense",
   "short_name": "007Swarm",
-  "description": "AI Immunological Defense Protocol by Chen Changxing",
-  "start_url": "index.html",
+  "description": "Multi-agent AI immune defense system. 数字蜂群免疫防御系统。AIスウォーム免疫防御。",
+  "start_url": "./demo.html",
   "display": "standalone",
-  "background_color": "#010409",
-  "theme_color": "#58a6ff",
+  "background_color": "#020b0f",
+  "theme_color": "#020b0f",
+  "lang": "zh-CN",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2592/2592231.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%23020b0f'/><text y='130' x='20' font-size='130' font-family='monospace' fill='%2300ffe7'>⬡</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
     }
-  ]
+  ],
+  "categories": ["security", "productivity", "utilities"],
+  "keywords": ["AI security", "multi-agent", "immune defense", "swarm", "cybersecurity", "数字免疫", "AI安全"],
+  "author": {
+    "name": "陈长兴 Chen Changxing",
+    "email": "chenchangxing52@gmail.com"
+  }
 }

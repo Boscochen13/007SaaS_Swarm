@@ -47,23 +47,35 @@
 <body>
     <div class="hero-video-bg"></div>
 
-    <nav
-        class="fixed top-0 w-full z-50 backdrop-blur-md border-b border-white/10 px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-3">
+    <nav class="fixed top-0 w-full z-50 backdrop-blur-md border-b border-white/10 px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3">
             <div class="w-6 h-6 bg-blue-500 rounded-sm rotate-45 animate-pulse"></div>
             <span class="font-bold tracking-widest text-lg">007SAAS SWARM</span>
+        </a>
+    </div>
+    <div class="flex gap-6 items-center">
+        <div class="hidden md:flex gap-6 text-sm text-gray-400">
+            <a href="index.html" class="hover:text-white">
+                <span data-lang="zh">愿景</span><span data-lang="en">Vision</span><span data-lang="ja">ビジョン</span>
+            </a>
+            <a href="live.html" class="hover:text-white text-blue-400">
+                <span data-lang="zh">实时演练</span><span data-lang="en">Live War</span><span data-lang="ja">演習</span>
+            </a>
+            <a href="immune_lab.html" class="hover:text-white">
+                <span data-lang="zh">实验室</span><span data-lang="en">Lab</span><span data-lang="ja">ラボ</span>
+            </a>
+            <a href="whitepaper.html" class="hover:text-white">
+                <span data-lang="zh">白皮书</span><span data-lang="en">Whitepaper</span><span data-lang="ja">白書</span>
+            </a>
         </div>
-        <div class="flex gap-6 items-center">
-            <div class="hidden md:flex gap-6 text-sm text-gray-400">
-                <a href="immune_lab.html" class="hover:text-white">实验室</a>
-                <a href="whitepaper.html" class="hover:text-white">白皮书</a>
-            </div>
-            <div class="flex gap-2 border-l border-white/20 pl-6">
-                <button onclick="setL('zh')" class="text-xs hover:text-blue-400">CN</button>
-                <button onclick="setL('en')" class="text-xs hover:text-blue-400">EN</button>
-            </div>
+        <div class="flex gap-2 border-l border-white/20 pl-6 text-gray-400">
+            <button onclick="setL('zh')" class="text-xs hover:text-blue-400">CN</button>
+            <button onclick="setL('en')" class="text-xs hover:text-blue-400">EN</button>
+            <button onclick="setL('ja')" class="text-xs hover:text-blue-400">JP</button>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <main class="min-h-screen flex flex-col items-center justify-center px-6 text-center">
         <div class="author-tag px-4 py-1 rounded-full text-blue-400 text-xs mb-8 tracking-[0.3em]">
