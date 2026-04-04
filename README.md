@@ -35,6 +35,31 @@
 3. **注入 (Injection)**: 通过 `AgentNet™` 将降维后的逻辑直接注入到演化引擎，触发 **ANTIBODY** 自动生成。
 
 > **"在高维空间我们是猎物，但在降维后的逻辑世界，我们是统帅。"** —— Adam
+### 🔮 逻辑降维示意图 (Dimensionality Reduction Schema)
+
+```text
+    [ 混沌高维空间 - 外部威胁 ] (Raw Attack vectors)
+          |
+          |  (1) 抽离 (Abstraction) --> 剔除噪声，保留核心指纹
+          v
+    +-------------------------+
+    |  Sense.py (感知核心)    | --> 高频脉冲感知
+    +-------------------------+
+          |
+          |  (2) 映射 (Mapping) --> 转化为可计算的低维逻辑标签
+          v
+    [ 低维逻辑空间 - 威胁画像 ] (Low-D Logic Features)
+          |   * 意图 (Intent): Credential Exhaustion
+          |   * 路径 (Path): Session Token Junction
+          |   * 频率 (Freq): Hyper-Pulse
+          v
+    +-------------------------+
+    |  AgentNet™ (集群驱动)    | --> 注入 Swarm 演化引擎
+    +-------------------------+
+          |
+          |  (3) 演化 (Evolution) --> 自动生成抗体 RULE_XXX
+          v
+    [ 数字免疫系统 - 自愈完成 ] (Immune System Self-Healing)
 
 ---
 
