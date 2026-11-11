@@ -7,7 +7,7 @@
 ## 🏛️ 项目概览
 本仓库是 **007SaaS** 项目的核心阵地。我们通过 **“降维感知”** 与 **“逻辑注入”**，打破了传统单一 AI 模型的局限，构建了一个基于多 Agent 协作的智能集群体系 (Swarm Intelligence)。
 
-- **著作者**: [Adam (亚当)](mailto:chenchangxing52@gmail.com)
+- **著作者**: [Adam (亚当)](mailto:hello@007saas.com)
 - **核心逻辑**: 逻辑降维 (Sense) -> 状态上报 (Report) -> 集群驱动 (Drive)
 - **在线演练**: [点击进入 Live 攻防实战演习场](https://boscochen13.github.io/007SaaS_Swarm/live.html)
 
@@ -79,5 +79,5 @@
 
 ## 📧 共同对齐
 如果您对“数字生命免疫演化”有深度见解，欢迎加入我们的逻辑集群：
-- **Email**: [chenchangxing52@gmail.com](mailto:chenchangxing52@gmail.com)
+- **Email**: [hello@007saas.com](mailto:hello@007saas.com)
 - **GitHub**: [boscochen13.github.io/007SaaS_Swarm/](https://boscochen13.github.io/007SaaS_Swarm/)
